@@ -26,7 +26,8 @@ def homepage(scores,name="System",difficulty=1):
         seperator()
         print("\t"*5+"*GAMING HUB*")
         print("\nSelect Options:\n1. Play Higher & Lower Game\n2. Scoreboard\n3. Options\n4. Exit\n")
-        option=int(input("Your Choice:\t"))
+        tempOpt=input("Your Choice:\t")
+        option = checkNumber(tempOpt)
         if option==1:
                 gameplay(name,difficulty,scores)
         elif option==2:
@@ -50,11 +51,20 @@ def show_option():
         else:
                 print("Invalid Selection!")
                 show_option()
-        
+
+def checkNumber(tempNum):
+        if(tempNum.isdigit()):
+                guess = int(tempNum)
+        else:
+                guess = 0
+        return guess
+                
 def title(points):
         seperator()
         print("**** Higher & Lower Game ****\nPoints: %s "  % points)
-        guess=int(input("Enter your guess:\t"))
+        temp = input("Enter your guess:\t")
+        guess = checkNumber(temp)
+        #guess=int(input("Enter your guess:\t"))
         return guess
    
 def gameplay(name, difficulty,scores):
@@ -95,7 +105,7 @@ def gameplay(name, difficulty,scores):
                 print("Points Earned: %s" % points)
 
                 found_key="No"
-                for key in scores.keys():
+                for key in list(scores.keys()):
                         if name==key:
                                 found_key="Yes"
                                 if int(scores.get(name)) < points:
@@ -135,7 +145,7 @@ def init():
                 name="System"
         else:
                 name=string.capwords(name_1)
-        print("Welcome %s, set difficulty level by selecting Options or Play at Easy Level!"% name)
+        print("Welcome %s, set difficulty level by selecting Options or Play at Easy Level!" % name)
         homepage(scores,name)
 
 init()
